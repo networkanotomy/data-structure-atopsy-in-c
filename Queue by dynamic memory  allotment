@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int n;
+int f=-1,r=-1;
+
+void input(){
+    printf("Kindly enter the size of the quene: ");
+    scanf("%d", &n);
+}
+
+void insert(int* arr){
+    if((r+1)%n==f){
+        printf("Queue is full\n");
+        return;
+    }
+    printf("Enter the element to be inserted: ");
+    int i;
+    scanf("%d", &i);
+    r = (r+1)%n;
+    arr[r] = i;
+    if(f == -1){
+        f = 0;
+    }
+}
+
+void deletion(int* arr){
+    if(f == -1){
+        printf("Queue is empty\n");
+        return;
+    }
+    printf("Deleted element is: %d\n", arr[f]);
+    if(f == r){
+        f = -1;
+        r = -1;
+    }else{
+        f = (f+1)%n;
+    }
+}
+
+void display(int* arr){
+    if(f == -1){
+        printf("Queue is empty\n");
+        return;
+    }
+    printf("Elements in the queue are: ");
+    for(int i = f; i != r; i = (i+1)%n){
+        printf("%d ", arr[i]);
+    }
+    printf("%d\n", arr[r]);
+}
+
+int main(){
+    input();
+    int* arr = (int*) malloc(n * sizeof(int));
+    int choice;
+    while(1){
+        printf("Enter choice: 1. Insert 2. Delete 3. Display 4. Exit\n");
+        scanf("%d", &choice);
+        switch(choice){
+            case 1: insert(arr);
+                    break;
+            case 2: deletion(arr);
+                    break;
+            case 3: display(arr);
+                    break;
+            case 4: free(arr);
+                    exit(0);
+            default: printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
